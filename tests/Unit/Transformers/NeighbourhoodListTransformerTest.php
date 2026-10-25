@@ -87,4 +87,14 @@ final class NeighbourhoodListTransformerTest extends TestCase
 
         $this->assertArrayHasKey('neighbourhood-force-delete-1', $actions);
     }
+
+    public function test_the_force_delete_hint_names_the_related_records(): void
+    {
+        $transformer = new NeighbourhoodListTransformer;
+
+        $this->assertSame(
+            __('basics13::messages.cannot_force_delete_related'),
+            (new \ReflectionMethod($transformer, 'getForceDeleteBlockHint'))->invoke($transformer, $this->record(['name' => 'Alde Zaharra'])),
+        );
+    }
 }

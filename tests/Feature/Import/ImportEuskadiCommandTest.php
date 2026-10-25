@@ -117,6 +117,19 @@ class ImportEuskadiCommandTest extends TestCase
         $this->assertSame($district->id, $town->refresh()->district_id);
     }
 
+    public function test_a_name_taken_by_another_code_is_warned_and_skipped(): void
+    {
+        $taken = State::factory()->create(['name' => 'Euskal Herria', 'ine_code' => 'XX']);
+        file_put_contents($this->file, "level,ine_code,name,parent_code\nstate,EH,Euskal Herria,\n");
+
+        $this->command(['--file' => $this->file])
+            ->expectsOutputToContain('taken by another record')
+            ->assertSuccessful();
+
+        $this->assertDatabaseCount('LOC_states', 1);
+        $this->assertSame('XX', $taken->refresh()->ine_code);
+    }
+
     public function test_an_incomplete_row_is_skipped(): void
     {
         file_put_contents($this->file, "level,ine_code,name,parent_code\nstate,,Euskal Herria,\n");
