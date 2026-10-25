@@ -1,0 +1,18 @@
+<?php
+
+namespace Locations13\Tests;
+
+use Illuminate\Database\Seeder;
+use Basics13\Database\Seeders\BasicsAccessSeeder;
+use Locations13\Database\Seeders\LocationsAccessSeeder;
+
+/**
+ * What `db:seed` gives the application for this package: basics13 first, then locations13.
+ */
+class AccessSeeder extends Seeder
+{
+    public function run(): void
+    {
+        $this->call([BasicsAccessSeeder::class, LocationsAccessSeeder::class]);
+    }
+}

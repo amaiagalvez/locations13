@@ -1,0 +1,30 @@
+Executed at: 2026-10-25 11:18:56 CET
+Time: 02:09.390, Memory: 87.00 MB
+Tests: 213, Assertions: 1931, Skipped: 1.
+Classes: 62.96% (51/81)
+Methods: 82.83% (299/361)
+Lines:   86.76% (1140/1314)
+Executed at: 2026-10-25 12:06:47 CET
+Time: 01:50.049, Memory: 85.00 MB
+Tests: 213, Assertions: 1955, Skipped: 1.
+Classes: 62.96% (51/81)
+Methods: 82.83% (299/361)
+Lines:   86.76% (1140/1314)
+Executed at: 2026-10-25 13:14:05 CET
+Time: 01:35.074, Memory: 85.00 MB
+Tests: 213, Assertions: 1959, Skipped: 1.
+Classes: 62.96% (51/81)
+Methods: 82.83% (299/361)
+Lines:   86.76% (1140/1314)
+Executed at: 2026-10-25 13:25:48 CET
+Time: 01:10.796, Memory: 89.00 MB
+Tests: 296, Assertions: 2230, Skipped: 1.
+Classes: 71.60% (58/81)
+Methods: 87.78% (316/360)
+Lines:   91.31% (1198/1312)
+Executed at: 2026-10-25 13:28:48 CET
+Time: 00:58.730, Memory: 87.00 MB
+Tests: 296, Assertions: 2230, Skipped: 1.
+Classes: 71.60% (58/81)
+Methods: 87.78% (316/360)
+Lines:   91.31% (1198/1312)
