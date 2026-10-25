@@ -22,13 +22,13 @@ class LocationsAccessSeeder extends Seeder
      * @var list<array{key: string, label: string, sort: int, parent?: string, icon?: string, route?: string, active?: string, except?: string, permissions?: list<string>}>
      */
     private const MENUS = [
-        ['key' => 'locations', 'label' => 'Locations', 'sort' => 300],
-        ['key' => 'states', 'parent' => 'locations', 'label' => 'States', 'sort' => 10, 'icon' => 'globe-europe-africa', 'route' => 'states.index', 'active' => 'states.*', 'permissions' => ['states.view']],
-        ['key' => 'communities', 'parent' => 'locations', 'label' => 'Communities', 'sort' => 20, 'icon' => 'flag', 'route' => 'communities.index', 'active' => 'communities.*', 'permissions' => ['communities.view']],
-        ['key' => 'countries', 'parent' => 'locations', 'label' => 'Countries', 'sort' => 30, 'icon' => 'map', 'route' => 'countries.index', 'active' => 'countries.*', 'permissions' => ['countries.view']],
-        ['key' => 'districts', 'parent' => 'locations', 'label' => 'Districts', 'sort' => 40, 'icon' => 'map-pin', 'route' => 'districts.index', 'active' => 'districts.*', 'permissions' => ['districts.view']],
-        ['key' => 'towns', 'parent' => 'locations', 'label' => 'Towns', 'sort' => 50, 'icon' => 'building-office-2', 'route' => 'towns.index', 'active' => 'towns.*', 'permissions' => ['towns.view']],
-        ['key' => 'neighbourhoods', 'parent' => 'locations', 'label' => 'Neighbourhoods', 'sort' => 60, 'icon' => 'home', 'route' => 'neighbourhoods.index', 'active' => 'neighbourhoods.*', 'permissions' => ['neighbourhoods.view']],
+        ['key' => 'locations13', 'label' => 'Locations package', 'sort' => 400],
+        ['key' => 'states', 'parent' => 'locations13', 'label' => 'States', 'sort' => 10, 'icon' => 'globe-europe-africa', 'route' => 'states.index', 'active' => 'states.*', 'permissions' => ['states.view']],
+        ['key' => 'communities', 'parent' => 'locations13', 'label' => 'Communities', 'sort' => 20, 'icon' => 'flag', 'route' => 'communities.index', 'active' => 'communities.*', 'permissions' => ['communities.view']],
+        ['key' => 'countries', 'parent' => 'locations13', 'label' => 'Countries', 'sort' => 30, 'icon' => 'map', 'route' => 'countries.index', 'active' => 'countries.*', 'permissions' => ['countries.view']],
+        ['key' => 'districts', 'parent' => 'locations13', 'label' => 'Districts', 'sort' => 40, 'icon' => 'map-pin', 'route' => 'districts.index', 'active' => 'districts.*', 'permissions' => ['districts.view']],
+        ['key' => 'towns', 'parent' => 'locations13', 'label' => 'Towns', 'sort' => 50, 'icon' => 'building-office-2', 'route' => 'towns.index', 'active' => 'towns.*', 'permissions' => ['towns.view']],
+        ['key' => 'neighbourhoods', 'parent' => 'locations13', 'label' => 'Neighbourhoods', 'sort' => 60, 'icon' => 'home', 'route' => 'neighbourhoods.index', 'active' => 'neighbourhoods.*', 'permissions' => ['neighbourhoods.view']],
     ];
 
     public function run(): void

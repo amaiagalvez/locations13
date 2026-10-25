@@ -27,20 +27,29 @@ class LocationMenuSeedTest extends TestCase
         $locations = collect(NavigationMenu::for(User::factory()->withPermissions([
             'states.view', 'communities.view', 'countries.view',
             'districts.view', 'towns.view', 'neighbourhoods.view',
-        ])->create()))->firstWhere('item.key', 'locations');
+        ])->create()))->firstWhere('item.key', 'locations13');
 
         $this->assertSame(
             ['states', 'communities', 'countries', 'districts', 'towns', 'neighbourhoods'],
-            array_column($locations['children'] ?? [], 'key'),
+            array_column(array_column($locations['children'] ?? [], 'item'), 'key'),
         );
     }
 
     public function test_each_link_asks_for_its_list_permission(): void
     {
         $locations = collect(NavigationMenu::for(User::factory()->withPermissions(['towns.view'])->create()))
-            ->firstWhere('item.key', 'locations');
+            ->firstWhere('item.key', 'locations13');
 
-        $this->assertSame(['towns'], array_column($locations['children'] ?? [], 'key'));
-        $this->assertNull(collect(NavigationMenu::for(User::factory()->create()))->firstWhere('item.key', 'locations'));
+        $this->assertSame(['towns'], array_column(array_column($locations['children'] ?? [], 'item'), 'key'));
+        $this->assertNull(collect(NavigationMenu::for(User::factory()->create()))->firstWhere('item.key', 'locations13'));
+    }
+
+    public function test_the_old_locations_group_is_gone(): void
+    {
+        DB::table('BAS_menus')->insert(['key' => 'locations', 'package' => 'locations13', 'label' => 'Locations', 'sort' => 300, 'created_at' => now(), 'updated_at' => now()]);
+
+        $this->seed(LocationsAccessSeeder::class);
+
+        $this->assertFalse(DB::table('BAS_menus')->where('key', 'locations')->exists());
     }
 }
