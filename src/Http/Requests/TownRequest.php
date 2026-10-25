@@ -70,7 +70,14 @@ class TownRequest extends FormRequest
                     ->ignore($this->route('town'))
                     ->whereNull('deleted_at'),
             ],
-            'ine_code' => ['nullable', 'string', 'max:'.MaxLength::string()],
+            'ine_code' => [
+                'nullable',
+                'string',
+                'max:'.MaxLength::string(),
+                Rule::unique(Town::class)
+                    ->ignore($this->route('town'))
+                    ->whereNull('deleted_at'),
+            ],
             'district_id' => ['nullable', 'integer', $this->selectableDistrictRule()],
             'postal_codes' => ['nullable', 'array'],
             'postal_codes.*' => ['string', 'max:'.MaxLength::string()],

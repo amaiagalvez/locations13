@@ -62,6 +62,18 @@ class StateUniqueIndexTest extends TestCase
             ->assertSessionHasNoErrors();
     }
 
+    public function test_an_ine_code_cannot_repeat_among_the_states_not_in_the_trash(): void
+    {
+        $this->actingAs($this->user());
+        State::factory()->create(['name' => 'Euskal Herria', 'ine_code' => 'EH']);
+
+        $this->from(route('states.index'))->post(route('states.store'), ['name' => 'Iparraldea', 'ine_code' => 'EH'])
+            ->assertRedirect(route('states.index'))
+            ->assertSessionHasErrors('ine_code');
+
+        $this->assertSame(1, State::query()->where('ine_code', 'EH')->count());
+    }
+
     private function user(): User
     {
         return $this->admin(User::create([

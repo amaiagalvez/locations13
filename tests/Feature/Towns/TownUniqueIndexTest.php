@@ -62,6 +62,18 @@ class TownUniqueIndexTest extends TestCase
             ->assertSessionHasNoErrors();
     }
 
+    public function test_an_ine_code_cannot_repeat_among_the_towns_not_in_the_trash(): void
+    {
+        $this->actingAs($this->user());
+        Town::factory()->create(['name' => 'Urretxu', 'ine_code' => '20058']);
+
+        $this->from(route('towns.index'))->post(route('towns.store'), ['name' => 'Zumarraga', 'ine_code' => '20058'])
+            ->assertRedirect(route('towns.index'))
+            ->assertSessionHasErrors('ine_code');
+
+        $this->assertSame(1, Town::query()->where('ine_code', '20058')->count());
+    }
+
     private function user(): User
     {
         return $this->admin(User::create([

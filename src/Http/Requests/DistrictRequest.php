@@ -50,7 +50,14 @@ class DistrictRequest extends FormRequest
                     ->ignore($this->route('district'))
                     ->whereNull('deleted_at'),
             ],
-            'ine_code' => ['nullable', 'string', 'max:'.MaxLength::string()],
+            'ine_code' => [
+                'nullable',
+                'string',
+                'max:'.MaxLength::string(),
+                Rule::unique(District::class)
+                    ->ignore($this->route('district'))
+                    ->whereNull('deleted_at'),
+            ],
             'country_id' => ['nullable', 'integer', $this->selectableCountryRule()],
             'notes' => ['nullable', 'string', 'max:'.MaxLength::longText()],
             'reuse_deleted_name' => ['sometimes', 'boolean'],

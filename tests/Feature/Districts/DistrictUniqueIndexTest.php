@@ -62,6 +62,18 @@ class DistrictUniqueIndexTest extends TestCase
             ->assertSessionHasNoErrors();
     }
 
+    public function test_an_ine_code_cannot_repeat_among_the_districts_not_in_the_trash(): void
+    {
+        $this->actingAs($this->user());
+        District::factory()->create(['name' => 'Goierri', 'ine_code' => '2005']);
+
+        $this->from(route('districts.index'))->post(route('districts.store'), ['name' => 'Tolosaldea', 'ine_code' => '2005'])
+            ->assertRedirect(route('districts.index'))
+            ->assertSessionHasErrors('ine_code');
+
+        $this->assertSame(1, District::query()->where('ine_code', '2005')->count());
+    }
+
     private function user(): User
     {
         return $this->admin(User::create([

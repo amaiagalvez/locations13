@@ -47,7 +47,14 @@ class StateRequest extends FormRequest
                     ->ignore($this->route('state'))
                     ->whereNull('deleted_at'),
             ],
-            'ine_code' => ['nullable', 'string', 'max:'.MaxLength::string()],
+            'ine_code' => [
+                'nullable',
+                'string',
+                'max:'.MaxLength::string(),
+                Rule::unique(State::class)
+                    ->ignore($this->route('state'))
+                    ->whereNull('deleted_at'),
+            ],
             'notes' => ['nullable', 'string', 'max:'.MaxLength::longText()],
             'reuse_deleted_name' => ['sometimes', 'boolean'],
         ];

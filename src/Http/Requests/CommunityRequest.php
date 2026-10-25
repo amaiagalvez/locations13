@@ -50,7 +50,14 @@ class CommunityRequest extends FormRequest
                     ->ignore($this->route('community'))
                     ->whereNull('deleted_at'),
             ],
-            'ine_code' => ['nullable', 'string', 'max:'.MaxLength::string()],
+            'ine_code' => [
+                'nullable',
+                'string',
+                'max:'.MaxLength::string(),
+                Rule::unique(Community::class)
+                    ->ignore($this->route('community'))
+                    ->whereNull('deleted_at'),
+            ],
             'state_id' => ['nullable', 'integer', $this->selectableStateRule()],
             'notes' => ['nullable', 'string', 'max:'.MaxLength::longText()],
             'reuse_deleted_name' => ['sometimes', 'boolean'],

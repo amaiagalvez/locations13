@@ -49,7 +49,14 @@ class NeighbourhoodRequest extends FormRequest
                 'max:'.MaxLength::string(),
                 $this->uniqueNamePerTown(),
             ],
-            'ine_code' => ['nullable', 'string', 'max:'.MaxLength::string()],
+            'ine_code' => [
+                'nullable',
+                'string',
+                'max:'.MaxLength::string(),
+                Rule::unique(Neighbourhood::class)
+                    ->ignore($this->route('neighbourhood'))
+                    ->whereNull('deleted_at'),
+            ],
             'town_id' => [
                 'required',
                 'integer',

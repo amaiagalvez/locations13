@@ -66,6 +66,18 @@ class CommunityUniqueIndexTest extends TestCase
         $this->assertSame('Arabako Errioxa', $other->refresh()->name);
     }
 
+    public function test_an_ine_code_cannot_repeat_among_the_communities_not_in_the_trash(): void
+    {
+        $this->actingAs($this->user());
+        Community::factory()->create(['name' => 'Gorbeialdea', 'ine_code' => '01']);
+
+        $this->from(route('communities.index'))->post(route('communities.store'), ['name' => 'Arabako Errioxa', 'ine_code' => '01'])
+            ->assertRedirect(route('communities.index'))
+            ->assertSessionHasErrors('ine_code');
+
+        $this->assertSame(1, Community::query()->where('ine_code', '01')->count());
+    }
+
     private function user(): User
     {
         return $this->admin(User::create([

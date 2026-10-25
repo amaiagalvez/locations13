@@ -19,6 +19,7 @@ return new class extends Migration
         });
 
         addUniqueActiveNameIndex('LOC_communities');
+        addUniqueActiveColumnIndex('LOC_communities', 'ine_code');
     }
 
     public function down(): void

@@ -67,6 +67,18 @@ class CountryUniqueIndexTest extends TestCase
         $this->assertSame('Iparraldea', $other->refresh()->name);
     }
 
+    public function test_an_ine_code_cannot_repeat_among_the_countries_not_in_the_trash(): void
+    {
+        $this->actingAs($this->user());
+        Country::factory()->create(['name' => 'Euskal Herria', 'ine_code' => 'EH']);
+
+        $this->from(route('countries.index'))->post(route('countries.store'), ['name' => 'Iparraldea', 'ine_code' => 'EH'])
+            ->assertRedirect(route('countries.index'))
+            ->assertSessionHasErrors('ine_code');
+
+        $this->assertSame(1, Country::query()->where('ine_code', 'EH')->count());
+    }
+
     private function user(): User
     {
         return $this->admin(User::create([

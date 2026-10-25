@@ -80,6 +80,24 @@ class NeighbourhoodUniqueIndexTest extends TestCase
         $this->assertSame('Iparragirre', $neighbourhood->refresh()->name);
     }
 
+    public function test_an_ine_code_cannot_repeat_among_the_neighbourhoods_not_in_the_trash(): void
+    {
+        $this->actingAs($this->user());
+        $town = Town::factory()->create();
+        $other = Town::factory()->create();
+        Neighbourhood::factory()->create(['name' => 'Iparragirre', 'town_id' => $town->id, 'ine_code' => '200580001']);
+
+        $this->from(route('neighbourhoods.index'))->post(route('neighbourhoods.store'), [
+            'name' => 'Elizkale',
+            'town_id' => (string) $other->id,
+            'ine_code' => '200580001',
+        ])
+            ->assertRedirect(route('neighbourhoods.index'))
+            ->assertSessionHasErrors('ine_code');
+
+        $this->assertSame(1, Neighbourhood::query()->where('ine_code', '200580001')->count());
+    }
+
     private function user(): User
     {
         return $this->admin(User::create([

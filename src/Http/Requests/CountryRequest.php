@@ -50,7 +50,14 @@ class CountryRequest extends FormRequest
                     ->ignore($this->route('country'))
                     ->whereNull('deleted_at'),
             ],
-            'ine_code' => ['nullable', 'string', 'max:'.MaxLength::string()],
+            'ine_code' => [
+                'nullable',
+                'string',
+                'max:'.MaxLength::string(),
+                Rule::unique(Country::class)
+                    ->ignore($this->route('country'))
+                    ->whereNull('deleted_at'),
+            ],
             'community_id' => ['nullable', 'integer', $this->selectableCommunityRule()],
             'notes' => ['nullable', 'string', 'max:'.MaxLength::longText()],
             'reuse_deleted_name' => ['sometimes', 'boolean'],

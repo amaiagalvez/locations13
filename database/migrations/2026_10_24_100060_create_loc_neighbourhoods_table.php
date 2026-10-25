@@ -20,6 +20,7 @@ return new class extends Migration
 
         // The name is unique inside the town, not globally: two towns may both have an "Old town".
         addUniqueActiveColumnIndex('LOC_neighbourhoods', 'name', ['town_id']);
+        addUniqueActiveColumnIndex('LOC_neighbourhoods', 'ine_code');
     }
 
     public function down(): void
