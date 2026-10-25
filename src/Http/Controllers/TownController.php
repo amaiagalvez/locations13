@@ -105,7 +105,8 @@ class TownController extends Controller
 
         $current = $town->postalCodes()->pluck('code')->all();
 
-        $town->postalCodes()->whereNotIn('code', $codes)->delete();
+        // A code the form drops is removed for good: a trashed one would come back with the town's restore.
+        $town->postalCodes()->whereNotIn('code', $codes)->forceDelete();
 
         foreach (array_diff($codes, $current) as $code) {
             $town->postalCodes()->create(['code' => $code]);

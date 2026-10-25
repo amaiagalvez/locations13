@@ -104,6 +104,20 @@ class TownTrashTest extends TestCase
         $this->assertSame(['20700', '20701'], $town->refresh()->postalCodes()->orderBy('code')->pluck('code')->all());
     }
 
+    public function test_a_postal_code_removed_in_an_edit_does_not_come_back_with_the_restore(): void
+    {
+        $this->actingAs($this->user());
+        $town = Town::factory()->create(['name' => 'Urretxu']);
+        $town->postalCodes()->createMany([['code' => '20700'], ['code' => '20701']]);
+
+        $this->put(route('towns.update', $town), ['name' => 'Urretxu', 'postal_codes' => ['20700']])->assertSessionHasNoErrors();
+        $town->delete();
+        $this->patch(route('towns.trash.restore', $town->id))->assertSessionHas('status', __('basics13::messages.restored'));
+
+        $this->assertSame(['20700'], $town->refresh()->postalCodes()->pluck('code')->all());
+        $this->assertSame(0, PostalCode::onlyTrashed()->where('town_id', $town->id)->count());
+    }
+
     public function test_postal_codes_never_block_the_permanent_delete(): void
     {
         $this->actingAs($this->user());
