@@ -105,6 +105,23 @@ class LocationWriteEdgeCasesTest extends TestCase
     }
 
     /**
+     * @param  class-string<LocationModel>  $model
+     */
+    #[DataProvider('resources')]
+    public function test_a_unique_constraint_race_on_restore_keeps_the_record_in_the_trash(string $model, string $prefix, string $singular): void
+    {
+        $this->signIn();
+        $record = $model::factory()->trashed()->create();
+        $model::updating(self::duplicateKey(...));
+
+        $this->patch(route($prefix.'.trash.restore', $record->getKey()))
+            ->assertRedirect(route($prefix.'.trash.index'))
+            ->assertSessionHas('error', __('basics13::messages.cannot_restore_name_taken'));
+
+        $this->assertSoftDeleted($record);
+    }
+
+    /**
      * @return array<string, array{0: class-string<LocationModel>, 1: string, 2: string, 3: class-string<LocationModel>|null, 4: string|null}>
      */
     public static function guardedDeletes(): array
