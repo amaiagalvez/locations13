@@ -6,7 +6,9 @@ use App\Models\User;
 use Locations13\Models\Town;
 use Locations13\Models\State;
 use Locations13\Tests\TestCase;
+use Locations13\Models\PostalCode;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use Illuminate\Database\UniqueConstraintViolationException;
 
 class TownUniqueIndexTest extends TestCase
 {
@@ -72,6 +74,26 @@ class TownUniqueIndexTest extends TestCase
             ->assertSessionHasErrors('ine_code');
 
         $this->assertSame(1, Town::query()->where('ine_code', '20058')->count());
+    }
+
+    public function test_a_postal_code_cannot_repeat_inside_its_town(): void
+    {
+        $town = Town::factory()->create();
+        PostalCode::factory()->for($town)->create(['code' => '20700']);
+
+        $this->expectException(UniqueConstraintViolationException::class);
+
+        PostalCode::factory()->for($town)->create(['code' => '20700']);
+    }
+
+    public function test_a_postal_code_may_repeat_in_another_town_or_in_the_trash(): void
+    {
+        $town = Town::factory()->create();
+        PostalCode::factory()->for($town)->create(['code' => '20700'])->delete();
+        PostalCode::factory()->for($town)->create(['code' => '20700']);
+        PostalCode::factory()->for(Town::factory())->create(['code' => '20700']);
+
+        $this->assertSame(3, PostalCode::withTrashed()->where('code', '20700')->count());
     }
 
     private function user(): User

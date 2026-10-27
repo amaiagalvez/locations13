@@ -1,6 +1,5 @@
 {
     "Locations package": "Localizaciones",
-    "A deleted record already uses the name :name.": "Un registro eliminado ya usa el nombre :name.",
     "Countries": "Provincias",
     "Countries used to qualify the rest of the system.": "Provincias usadas para cualificar el resto del sistema.",
     "Country": "Provincia",
@@ -61,7 +60,6 @@
     "communities.force_delete": "Eliminar comunidades autónomas definitivamente",
     "communities.manage": "Gestionar comunidades autónomas (acceso completo)",
     "Nothing selected": "Nada seleccionado",
-    "District": "Comarca",
     "Districts": "Comarcas",
     "Districts used to qualify the rest of the system.": "Comarcas usadas para cualificar el resto del sistema.",
     "Edit district": "Editar comarca",

@@ -103,6 +103,9 @@ class TownController extends Controller
             return;
         }
 
+        // The town's row lock serializes two saves of the same town, so both read the codes the other wrote.
+        Town::query()->whereKey($town->getKey())->lockForUpdate()->first();
+
         $current = $town->postalCodes()->pluck('code')->all();
 
         // A code the form drops is removed for good: a trashed one would come back with the town's restore.

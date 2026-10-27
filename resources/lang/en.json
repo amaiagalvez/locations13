@@ -1,6 +1,5 @@
 {
     "Locations package": "Locations",
-    "A deleted record already uses the name :name.": "A deleted record already uses the name :name.",
     "Countries": "Countries",
     "Countries used to qualify the rest of the system.": "Countries used to qualify the rest of the system.",
     "Country": "Country",
@@ -61,7 +60,6 @@
     "communities.force_delete": "Delete communities permanently",
     "communities.manage": "Manage communities (full access)",
     "Nothing selected": "Nothing selected",
-    "District": "District",
     "Districts": "Districts",
     "Districts used to qualify the rest of the system.": "Districts used to qualify the rest of the system.",
     "Edit district": "Edit district",

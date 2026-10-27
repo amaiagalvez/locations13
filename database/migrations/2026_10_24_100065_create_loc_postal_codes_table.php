@@ -19,11 +19,13 @@ return new class extends Migration
             // No cascade here on purpose: the town's model hooks decide when the codes are taken
             // away, never a foreign key that runs before the guards have had their turn.
             $table->foreignId('town_id')->constrained('LOC_towns');
-            $table->index(['town_id']);
 
             addCommonColumns($table);
             addAuditColumns($table);
         });
+
+        // A code is unique inside its town: two saves of the same town cannot both add it.
+        addUniqueActiveColumnIndex('LOC_postal_codes', 'code', ['town_id']);
     }
 
     public function down(): void

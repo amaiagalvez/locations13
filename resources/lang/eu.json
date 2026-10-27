@@ -1,6 +1,5 @@
 {
     "Locations package": "Lokalizazioak",
-    "A deleted record already uses the name :name.": "Ezabatutako erregistro batek :name izena bailiz.",
     "Countries": "Herrialdeak",
     "Countries used to qualify the rest of the system.": "Sistemaren gainekoa sailkatzeko erabiltzen diren herrialdeak.",
     "Country": "Herrialdea",
@@ -61,7 +60,6 @@
     "communities.force_delete": "Erkidegoak betiko ezabatu",
     "communities.manage": "Erkidegoak kudeatu (sarbide osoa)",
     "Nothing selected": "Ez da ezer hautatu",
-    "District": "Eskualdea",
     "Districts": "Eskualdeak",
     "Districts used to qualify the rest of the system.": "Sistemaren gainekoa sailkatzeko erabiltzen diren eskualdeak.",
     "Edit district": "Eskualdea editatu",
